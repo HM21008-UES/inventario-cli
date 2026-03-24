@@ -11,8 +11,8 @@ Aplicar los conceptos de programación mediante pseudocódigo en PSeInt.
 - Raquel Abigail Hernández Martínez     
 - César Daniel Acosta Mejía              
 ## Carnet
-HM21008
-AM25064
+- HM21008
+- AM25064
 ## Funcionalidades
 - Gestión de productos
 - Gestión de proveedores
