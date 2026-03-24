@@ -7,10 +7,12 @@ Aplicación en consola para gestionar productos, proveedores y control de stock.
 ## Objetivo
 Aplicar los conceptos de programación mediante pseudocódigo en PSeInt.
 
-## Integrantes                           Carnet
-- Raquel Abigail Hernández Martínez      HM21008
-- César Daniel Acosta Mejía              AM25064
-
+## Integrantes                           
+- Raquel Abigail Hernández Martínez     
+- César Daniel Acosta Mejía              
+## Carnet
+HM21008
+AM25064
 ## Funcionalidades
 - Gestión de productos
 - Gestión de proveedores
