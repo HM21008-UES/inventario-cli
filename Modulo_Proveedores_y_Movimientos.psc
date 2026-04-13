@@ -1,11 +1,11 @@
 Algoritmo Modulo_Proveedores_y_Movimientos
-	// Definici髇 de variables globales simuladas
+	// Definici贸n de variables globales simuladas
 	Definir nombreProv, contactoProv Como Cadena
 	Definir nombreProd, fechaEntrada Como Cadena
 	Definir stockActual, cantidadEntrada, nuevoStock Como Entero
 	Definir opcion Como Entero
 	
-	// Inicializaci髇 de datos de ejemplo
+	// Inicializaci贸n de datos de ejemplo
 	nombreProv <- "Sin asignar"
 	contactoProv <- "Sin asignar"
 	nombreProd <- "Producto Ejemplo"
@@ -14,13 +14,13 @@ Algoritmo Modulo_Proveedores_y_Movimientos
 	Repetir
 		Escribir ""
 		Escribir "========================================="
-		Escribir "   SISTEMA DE INVENTARIO - TU M覦ULO"
+		Escribir "   SISTEMA DE INVENTARIO "
 		Escribir "========================================="
 		Escribir "1. Agregar Proveedor"
 		Escribir "2. Registrar Entrada de Stock"
-		Escribir "3. Consultar Historial de Entradas (趌tima)"
+		Escribir "3. Consultar Historial de Entradas (脷ltima)"
 		Escribir "4. Salir"
-		Escribir "Seleccione una opci髇:"
+		Escribir "Seleccione una opci贸n:"
 		Leer opcion
 		
 		Segun opcion Hacer
@@ -30,7 +30,7 @@ Algoritmo Modulo_Proveedores_y_Movimientos
 				Leer nombreProv
 				Escribir "Ingrese el contacto (Tel/Email):"
 				Leer contactoProv
-				Escribir "? Proveedor guardado con 閤ito."
+				Escribir "? Proveedor guardado con 茅xito."
 				
 			2:
 				Escribir "--- REGISTRAR ENTRADA DE STOCK ---"
@@ -40,7 +40,7 @@ Algoritmo Modulo_Proveedores_y_Movimientos
 				Escribir "Ingrese la cantidad que entra:"
 				Leer cantidadEntrada
 				
-				// VALIDACI覰: Que la entrada no sea negativa o cero
+				// VALIDACI脫N: Que la entrada no sea negativa o cero
 				Si cantidadEntrada <= 0 Entonces
 					Escribir "? Error: La cantidad de entrada debe ser mayor a cero."
 				SiNo
@@ -57,9 +57,9 @@ Algoritmo Modulo_Proveedores_y_Movimientos
 			3:
 				Escribir "--- HISTORIAL DE ENTRADAS ---"
 				Si cantidadEntrada = 0 Entonces
-					Escribir "No hay movimientos registrados a鷑."
+					Escribir "No hay movimientos registrados a煤n."
 				SiNo
-					Escribir "趌timo movimiento registrado:"
+					Escribir "脷ltimo movimiento registrado:"
 					Escribir "Fecha: ", fechaEntrada
 					Escribir "Producto: ", nombreProd
 					Escribir "Cantidad ingresada: ", cantidadEntrada
@@ -71,7 +71,7 @@ Algoritmo Modulo_Proveedores_y_Movimientos
 				Escribir "Saliendo del sistema..."
 				
 			De Otro Modo:
-				Escribir "Opci髇 no v醠ida."
+				Escribir "Opci贸n no v谩lida."
 		FinSegun
 		
 	Hasta Que opcion = 4
