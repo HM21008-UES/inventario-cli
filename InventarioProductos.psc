@@ -1,226 +1,126 @@
-Algoritmo Sistema_Inventario_Principal
+algoritmo Sistema_Inventario_Principal
 	
-    //Variables compartidas - sin tamaño -
-    definir nombres como texto
-    definir codigos como entero
-    definir precios como texto
-    definir stocks como entero
+    definir opcion Como Entero    
+    // arreglos de almacenamiento de información - 100 productos si no inventario lleno
+    dimension nombres[100]
+    dimension codigos[100]
+    dimension precios[100]
+    dimension stocks[100]
     
-    // arreglos para el historial de movimientos
-    definir historialProducto como texto
-    definir historialCantidad como entero
-    definir historialFecha como texto
-    definir historialTipo como texto  // entrada o salida
-    definir historialProveedor como texto
+	i <- 1 //variable - 1 (Controlar el espacio total)
     
-    Dimension nombres[100]
-    Dimension codigos[100]
-    Dimension precios[100]
-    Dimension stocks[100]
-    
-    Dimension historialProducto[500]
-    Dimension historialCantidad[500]
-    Dimension historialFecha[500]
-    Dimension historialTipo[500]
-    Dimension historialProveedor[500]
-    
-    // i - próxima posición libre para guardar un producto
-    // h - posición del siguiente movimiento en historial
-    Definir i, h Como Entero
-    i <- 1
-    h <- 1
-    
-    Definir opcion Como Entero
-    
-    Repetir
-        Escribir ""
-        Escribir "================================="
-        Escribir "   SISTEMA GENERAL INVENTARIO"
-        Escribir "================================="
-        Escribir "1. Gestionar Productos"
-        Escribir "2. Proveedores y Movimientos"
-        Escribir "3. Salir"
-        Leer opcion
+    repetir
+        escribir ""
+        escribir "================================="
+        escribir "   SISTEMA GENERAL INVENTARIO"
+        escribir "================================="
+        escribir "1. Gestionar Productos"
+        escribir "2. Proveedores y Movimientos"
+        escribir "3. Salir"
+        leer opcion
         
-        Segun opcion Hacer
+        segun opcion hacer
             1:
-                modulo_productos_inventario(nombres, codigos, precios, stocks, i)
+                modulo_productos_inventario(nombres, codigos, precios, stocks, i) //llamará a módulo productos				
             2:
-                Modulo_Proveedores_y_Movimientos
+                //Modulo_Proveedores_y_Movimientos(...)                
             3:
-                Escribir "Cerrando sistema..."
-                
-            De Otro Modo:
-                Escribir "Opcion invalida"
-        FinSegun
-        
-    Hasta Que opcion = 3
+                escribir "Cerrando sistema..."                
+            de otro modo:
+                escribir "Opcion invalida" //imprimir opcion invalida y se repide el menu 
+        finsegun        
+    hasta que opcion = 3	
+finalgoritmo
+//------------------------------------------------------------------------------------------------------------------------
+subproceso modulo_productos_inventario(nombres, codigos, precios, stocks, i) // (Variables locales)
+	//variables....
+    definir opcion, j, codigoBuscar Como Entero //j  nueva variables 
+    definir encontrado Como Logico //voleano
+    encontrado <- falso
 	
-FinAlgoritmo
-
-SubProceso modulo_productos_inventario(nombres, codigos, precios, stocks, i Por Referencia)
-	
-    Definir j , opcion, codigoBuscar Como Entero //j recorre la lista
-	
-    Repetir
-        Escribir ""
-        Escribir "======= MENU PRODUCTOS ======="
-        Escribir "1. Agregar producto"
-        Escribir "2. Modificar producto"
-        Escribir "3. Listar productos"
-        Escribir "4. Volver a : SISTEMA GENERAL INVENTARIO"
-        Leer opcion
-        
-        Segun opcion Hacer
-            
-            1:
-                Escribir "Ingrese nombre del producto:"
-                Leer nombres[i]
+    repetir
+        escribir ""
+        escribir "======= MENU PRODUCTOS ======="
+        escribir "1. Agregar producto"
+        escribir "2. Modificar producto"
+        escribir "3. Listar productos"
+        escribir "4. Salir"
+        leer opcion        
+        // VALIDACIÓN DEL MENÚ
+        si opcion <= 0 o opcion > 4 entonces
+            escribir "Opcion invalida, seleccione una opcion correcta"
+        sino			
+            segun opcion hacer
                 
-                Escribir "Ingrese codigo del producto:"
-                Leer codigos[i]
-                
-                Escribir "Ingrese precio del producto:"
-                Leer precios[i]
-                
-                Escribir "Ingrese stock del producto:"
-                Leer stocks[i]
-                
-                Si stocks[i] < 0 Entonces
-                    Escribir "ERROR: El stock no puede ser negativo"
-                SiNo
-                    Escribir "Producto registrado correctamente"
-                    i <- i + 1
-                FinSi
-                
-            2:
-                Escribir "Ingrese el codigo del producto a modificar:"
-                Leer codigoBuscar
-				
-                Para j <- 1 Hasta i-1 Hacer
-                    Si codigos[j] = codigoBuscar Entonces
+                1:
+                    si i > 100 entonces //Espacios declarados 
+                        escribir "Inventario lleno"
+                    sino
+                        // registro de nuevo producto
+                        escribir "Ingrese nombre del producto:"
+                        leer nombres[i]                        
+                        escribir "Ingrese codigo del producto:"
+                        leer codigos[i]                        
+                        escribir "Ingrese precio del producto:"
+                        leer precios[i]                        
+                        escribir "Ingrese stock del producto:"
+                        leer stocks[i]                        
+                        // validación del stock --- no puede ser negativo
+                        si stocks[i] < 0 entonces
+                            escribir "ERROR: El stock no puede ser negativo"
+                        sino
+                            escribir "Producto registrado correctamente"
+                            i <- i + 1 //Se guardara en el siguiente espacio
+                        finsi
                         
-                        Escribir "Ingrese el nuevo nombre:"
-                        Leer nombres[j]
-                        
-                        Escribir "Ingrese el nuevo precio:"
-                        Leer precios[j]
-                        
-                        Escribir "Ingrese el nuevo stock:"
-                        Leer stocks[j]
-                        
-                        Si stocks[j] < 0 Entonces
-                            Escribir "ERROR: El stock no puede ser negativo"
-                            stocks[j] <- 0
-                        FinSi
-                        
-                        Escribir "Producto modificado correctamente"
-                        
-                    FinSi
-                FinPara
-                
-            3:
-                Si i = 1 Entonces
-                    Escribir "No existen productos registrados"
-                SiNo
-                    Para j <- 1 Hasta i-1 Hacer
-                        Escribir "--------------------------------"
-                        Escribir "Nombre: ", nombres[j]
-                        Escribir "Codigo: ", codigos[j]
-                        Escribir "Precio: ", precios[j]
-                        Escribir "Stock : ", stocks[j]
-                        Escribir "--------------------------------"
-                    FinPara
-                FinSi
-			4:
-				Escribir "Saliendo del modulo productos..."
-                
-        FinSegun
-        
-    Hasta Que opcion = 4
-	
-FinSubProceso
-
-SubProceso Modulo_Proveedores_y_Movimientos
-
-// Definición de variables globales simuladas
-	Definir nombreProv, contactoProv Como Cadena
-	Definir nombreProd, fechaEntrada Como Cadena
-	Definir stockActual, cantidadEntrada, nuevoStock Como Entero
-	Definir opcion Como Entero
-	
-	// Inicialización de datos de ejemplo
-	nombreProv <- "Sin asignar"
-	contactoProv <- "Sin asignar"
-	nombreProd <- "Producto Ejemplo"
-	stockActual <- 10 // Stock inicial para la prueba
-	
-	Repetir
-		Escribir ""
-		Escribir "========================================="
-		Escribir "   SISTEMA DE INVENTARIO - TU MÓDULO"
-		Escribir "========================================="
-		Escribir "1. Agregar Proveedor"
-		Escribir "2. Registrar Entrada de Stock"
-		Escribir "3. Consultar Historial de Entradas (Última)"
-		Escribir "4. Salir"
-		Escribir "Seleccione una opción:"
-		Leer opcion
-		
-		Segun opcion Hacer
-			1:
-				Escribir "--- AGREGAR PROVEEDOR ---"
-				Escribir "Ingrese el nombre del proveedor:"
-				Leer nombreProv
-				Escribir "Ingrese el contacto (Tel/Email):"
-				Leer contactoProv
-				Escribir "? Proveedor guardado con éxito."
-				
-			2:
-				Escribir "--- REGISTRAR ENTRADA DE STOCK ---"
-				Escribir "Producto actual: ", nombreProd
-				Escribir "Stock actual: ", stockActual
-				
-				Escribir "Ingrese la cantidad que entra:"
-				Leer cantidadEntrada
-				
-				// VALIDACIÓN: Que la entrada no sea negativa o cero
-				Si cantidadEntrada <= 0 Entonces
-					Escribir "? Error: La cantidad de entrada debe ser mayor a cero."
-				SiNo
-					Escribir "Ingrese la fecha de entrada (DD/MM/AAAA):"
-					Leer fechaEntrada
+                    finsi                    
+                2:
+                    escribir "Ingrese el codigo del producto a modificar:"
+                    leer codigoBuscar
+                    
+                    encontrado <- falso
 					
-					nuevoStock <- stockActual + cantidadEntrada
-					stockActual <- nuevoStock // Actualizamos el stock
-					
-					Escribir "? Entrada registrada."
-					Escribir "Nuevo stock disponible: ", stockActual
-				FinSi
-				
-			3:
-				Escribir "--- HISTORIAL DE ENTRADAS ---"
-				Si cantidadEntrada = 0 Entonces
-					Escribir "No hay movimientos registrados aún."
-				SiNo
-					Escribir "Último movimiento registrado:"
-					Escribir "Fecha: ", fechaEntrada
-					Escribir "Producto: ", nombreProd
-					Escribir "Cantidad ingresada: ", cantidadEntrada
-					Escribir "Proveedor: ", nombreProv
-					Escribir "Stock resultante: ", stockActual
-				FinSi
-				
-			4:
-				Escribir "Saliendo del sistema..."
-				
-			De Otro Modo:
-				Escribir "Opción no válida."
-		FinSegun
-		
-	Hasta Que opcion = 4
-	
-FinSubProceso
-
-	
-
+                    para j <- 1 hasta i-1 hacer 
+                        si codigos[j] = codigoBuscar entonces //compara el codigo del producto para saber si esta o no en lista
+                            
+                            escribir "Ingrese el nuevo nombre:"
+                            leer nombres[j]
+                            escribir "Ingrese el nuevo precio:"
+                            leer precios[j]
+                            escribir "Ingrese el nuevo stock:"
+                            leer stocks[j]
+							
+                            si stocks[j] < 0 entonces
+                               escribir "ERROR: El stock no puede ser negativo"
+                               stocks[j] <- 0
+                            finsi
+                            
+                            escribir "Producto modificado correctamente"
+                            encontrado <- verdadero //se modifico el producto
+                            
+                        finsi
+                    finpara
+                    
+                    si encontrado = falso entonces // no se encontro el codigo de producto e lista
+                        escribir "Producto no encontrado"
+                    finsi
+                    
+                3:
+                    si i = 1 entonces //primera casilla vacia 
+                        escribir "No existen productos registrados"
+                    sino
+                        para j <- 1 hasta i-1 hacer // impresion de productos en orden
+                            escribir "--------------------------------"
+                            escribir "Nombre : ", nombres[j]
+                            escribir "Codigo : ", codigos[j]
+                            escribir "Precio : ", precios[j]
+                            escribir "Stock  : ", stocks[j]
+                            escribir "--------------------------------"
+                        finpara
+                    finsi                    
+                4:
+                    escribir "Saliendo del modulo productos..."                    
+            finsegun            
+        finsi        
+    hasta que opcion = 4	
+finsubproceso
