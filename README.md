@@ -13,6 +13,7 @@ Aplicar los conceptos de programación mediante pseudocódigo en PSeInt.
 ## Carnet
 - HM21008
 - AM25064
+  
 ## Funcionalidades
 - Gestión de productos
 - Gestión de proveedores
