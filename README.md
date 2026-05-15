@@ -1,17 +1,17 @@
 # Sistema de Inventario CLI
 
-## Descripción
+### Descripción
 Sistema de inventario desarrollado en Python con arquitectura modular. Permite la gestión de productos, proveedores y movimientos de inventario mediante una interfaz de línea de comandos. Utiliza archivos JSON para el almacenamiento de datos.
 
-## Objetivo
+### Objetivo
 Implementar un sistema funcional en Python aplicando programación modular, CRUD, manejo de archivos JSON, validaciones y estructuras de datos.
 
-## Integrantes
+### Integrantes
 
 - Raquel Abigail Hernández Martínez (HM21008)
 - César Daniel Acosta Mejía (AM25064)
 
-### Funcionalidades
+# Funcionalidades
 
 ### Módulo de Productos
 - Agregar producto
