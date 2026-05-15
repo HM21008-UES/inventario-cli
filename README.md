@@ -1,19 +1,34 @@
-## inventario-cli
-Sistema de gestión de inventarios
+# Sistema de Inventario CLI
 
 ## Descripción
-Aplicación en consola para gestionar productos, proveedores y control de stock.
+Sistema de inventario desarrollado en Python con arquitectura modular. Permite la gestión de productos, proveedores y movimientos de inventario mediante una interfaz de línea de comandos. Utiliza archivos JSON para el almacenamiento de datos.
 
 ## Objetivo
-Aplicar los conceptos de programación mediante pseudocódigo en PSeInt.
+Implementar un sistema funcional en Python aplicando programación modular, CRUD, manejo de archivos JSON, validaciones y estructuras de datos.
 
-## Integrantes                           
-- Raquel Abigail Hernández Martínez     
-- César Daniel Acosta Mejía              
-## Carnet
-- HM21008
-- AM25064
-## Funcionalidades
-- Gestión de productos
-- Gestión de proveedores
-- Control de inventario
+## Integrantes
+
+- Raquel Abigail Hernández Martínez (HM21008)
+- César Daniel Acosta Mejía (AM25064)
+
+### Funcionalidades
+
+### Módulo de Productos
+- Agregar producto
+- Listar productos
+- Modificar producto
+- Eliminar producto
+- Validación de datos
+- Persistencia en JSON
+
+### Módulo de Proveedores
+- Registrar proveedor
+- Listar proveedores
+- Modificar proveedor
+- Eliminar proveedor
+- Persistencia en JSON
+
+### Módulo de Movimientos
+- Registrar entradas de inventario
+- Actualizar stock
+- Consultar historial de movimientos
