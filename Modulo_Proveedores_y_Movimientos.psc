@@ -77,5 +77,5 @@ Algoritmo Modulo_Proveedores_y_Movimientos
 	Hasta Que opcion = 4
 	
 FinAlgoritmo
-	
+//fin	
 
