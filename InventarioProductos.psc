@@ -124,3 +124,4 @@ subproceso modulo_productos_inventario(nombres, codigos, precios, stocks, i) // 
         finsi        
     hasta que opcion = 4	
 finsubproceso
+//fin
