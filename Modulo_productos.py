@@ -1,4 +1,3 @@
-# librerías necesarias
 import json
 import os
 
@@ -16,70 +15,70 @@ def cargar_productos():
             return json.load(archivo)
     # si el archivo está dañado
     except json.JSONDecodeError:
-        print("error al cargar datos")
+        print("Error al cargar datos.")
         return []
 
 # guardar productos en el archivo
-def guardar_productos(productos):
+def guardar_productos(productos_lista):
     # escribe en el archivo json
     with open(archivo_json, 'w', encoding='utf-8') as archivo:
-        json.dump(productos, archivo, indent=4)
+        json.dump(productos_lista, archivo, indent=4)
 
 # buscar producto por código
-def buscar_producto(productos, codigo):
+def buscar_producto(productos_lista, codigo):
     # recorre lista de productos
-    for i, prod in enumerate(productos):
+    for i, prod in enumerate(productos_lista):
         # compara código
         if prod['codigo'].upper() == codigo.upper():
             return i
     return None
 
 # validar nombre duplicado
-def nombre_duplicado(productos, nombre):
+def nombre_duplicado(productos_lista, nombre):
     # revisa si ya existe el nombre
-    for prod in productos:
+    for prod in productos_lista:
         if prod['nombre'].upper() == nombre.upper():
             return True
     return False
 
 # agregar producto
-def agregar_producto(productos):
-    print("\n--- agregar producto ---")
+def agregar_producto(productos_lista):
+    print("\n--- Agregar producto ---")
     # pedir código
-    codigo = input("codigo: ").strip().upper()
+    codigo = input("Código: ").strip().upper()
     # validar código vacío
     if codigo == "":
-        print("codigo vacio")
+        print("Código vacío.")
         return
     # validar duplicado
-    if buscar_producto(productos, codigo) is not None:
-        print("codigo ya existe")
+    if buscar_producto(productos_lista, codigo) is not None:
+        print("El código ya existe.")
         return
     # pedir nombre
-    nombre = input("nombre: ").strip()
+    nombre = input("Nombre: ").strip()
     # validar nombre
     if nombre == "":
-        print("nombre vacio")
+        print("Nombre vacío.")
         return
     # validar duplicado nombre
-    if nombre_duplicado(productos, nombre):
-        print("nombre ya existe")
+    if nombre_duplicado(productos_lista, nombre):
+        print("El nombre ya existe.")
         return
     try:
         # pedir precio
-        precio = float(input("precio: "))
+        precio = float(input("Precio: "))
         # validar precio
         if precio <= 0:
-            print("precio invalido")
+            print("Precio inválido.")
             return
         # pedir stock
-        stock = int(input("stock: "))
+        stock = int(input("Stock: "))
         # validar stock
         if stock < 0:
-            print("stock invalido")
+            print("Stock inválido.")
             return
     except ValueError:
-        print("datos invalidos")
+        print("Datos inválidos.")
         return
     # crear producto
     producto = {
@@ -89,100 +88,95 @@ def agregar_producto(productos):
         "stock": stock
     }
     # guardar en lista
-    productos.append(producto)
+    productos_lista.append(producto)
     # guardar archivo
-    guardar_productos(productos)
-    print("producto agregado")
+    guardar_productos(productos_lista)
+    print("Producto agregado correctamente.")
 
 # listar productos
-def listar_productos(productos):
-    print("\n--- lista de productos ---")
+def listar_productos(productos_lista):
+    print("\n--- Lista de productos ---")
     # si no hay productos
-    if len(productos) == 0:
-        print("no hay productos")
+    if len(productos_lista) == 0:
+        print("No hay productos registrados.")
         return
     # mostrar cada producto
-    for p in productos:
+    for p in productos_lista:
         print("----------------")
-        print("codigo:", p['codigo'])
-        print("nombre:", p['nombre'])
-        print("precio:", p['precio'])
-        print("stock:", p['stock'])
+        print("Código:", p['codigo'])
+        print("Nombre:", p['nombre'])
+        print("Precio:", p['precio'])
+        print("Stock:", p['stock'])
 
 # modificar producto
-def modificar_producto(productos):
-    print("\n--- modificar producto ---")
-    codigo = input("codigo: ").strip().upper()
+def modificar_producto(productos_lista):
+    print("\n--- Modificar producto ---")
+    codigo = input("Código: ").strip().upper()
     # buscar producto
-    i = buscar_producto(productos, codigo)
+    i = buscar_producto(productos_lista, codigo)
     if i is None:
-        print("no existe")
+        print("El producto no existe.")
         return
     # cambiar nombre
-    nombre = input("nuevo nombre: ").strip()
+    nombre = input("Nuevo nombre: ").strip()
     if nombre != "":
-        if nombre_duplicado(productos, nombre):
-            print("nombre en uso")
+        if nombre_duplicado(productos_lista, nombre):
+            print("El nombre ya está en uso.")
             return
-        productos[i]['nombre'] = nombre
+        productos_lista[i]['nombre'] = nombre
     try:
         # cambiar precio
-        precio = input("nuevo precio: ").strip()
+        precio = input("Nuevo precio: ").strip()
         if precio != "":
             precio = float(precio)
             if precio > 0:
-                productos[i]['precio'] = precio
+                productos_lista[i]['precio'] = precio
         # cambiar stock
-        stock = input("nuevo stock: ").strip()
+        stock = input("Nuevo stock: ").strip()
         if stock != "":
             stock = int(stock)
             if stock >= 0:
-                productos[i]['stock'] = stock
+                productos_lista[i]['stock'] = stock
     except ValueError:
-        print("dato invalido")
+        print("Dato inválido.")
     # guardar cambios
-    guardar_productos(productos)
-    print("actualizado")
+    guardar_productos(productos_lista)
+    print("Producto actualizado correctamente.")
 
 # eliminar producto
-def eliminar_producto(productos):
-    print("\n--- eliminar producto ---")
-    codigo = input("codigo: ").strip().upper()
+def eliminar_producto(productos_lista):
+    print("\n--- Eliminar producto ---")
+    codigo = input("Código: ").strip().upper()
     # buscar producto
-    i = buscar_producto(productos, codigo)
+    i = buscar_producto(productos_lista, codigo)
     if i is None:
-        print("no existe")
+        print("El producto no existe.")
         return
     # eliminar
-    productos.pop(i)
-    guardar_productos(productos)
-    print("eliminado")
+    productos_lista.pop(i)
+    guardar_productos(productos_lista)
+    print("Producto eliminado correctamente.")
 
-# menú principal
-def menu():
-    productos = cargar_productos()
+# submenú de productos
+def menu_productos():
     while True:
+        productos_lista = cargar_productos()
         print("\n======= MENÚ PRODUCTOS =======")
         print("1. Agregar producto")
         print("2. Ver productos")
         print("3. Modificar producto")
         print("4. Eliminar producto")
-        print("5. Salir")
+        print("5. Volver al menú principal")
         opcion = input("Seleccione una opción: ")
         if opcion == "1":
-            agregar_producto(productos)
+            agregar_producto(productos_lista)
         elif opcion == "2":
-            listar_productos(productos)
+            listar_productos(productos_lista)
         elif opcion == "3":
-            modificar_producto(productos)
+            modificar_producto(productos_lista)
         elif opcion == "4":
-            eliminar_producto(productos)
+            eliminar_producto(productos_lista)
         elif opcion == "5":
-            print("saliendo")
             break
         else:
-            print("opcion invalida")
-
-# ejecutar programa
-if __name__ == "__main__":
-    menu()
+            print("Opción inválida.")
