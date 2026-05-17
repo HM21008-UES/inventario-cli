@@ -1,11 +1,9 @@
 import json
 import os
 
-# archivo donde se guardan los productos
-archivo_json = 'productos.json'
+archivo_json = 'productos.json' # archivo donde se guardan los productos
 
-# cargar productos del archivo
-def cargar_productos():
+def cargar_productos(): # cargar productos del archivo
     # si no existe el archivo devuelve lista vacía
     if not os.path.exists(archivo_json):
         return []
@@ -13,9 +11,9 @@ def cargar_productos():
         # abre y lee el archivo json
         with open(archivo_json, 'r', encoding='utf-8') as archivo:
             return json.load(archivo)
-    # si el archivo está dañado
-    except json.JSONDecodeError:
-        print("Error al cargar datos.")
+
+    except json.JSONDecodeError:   # si el archivo está dañado
+        print("Error al cargar datos")
         return []
 
 # guardar productos en el archivo
@@ -42,43 +40,43 @@ def nombre_duplicado(productos_lista, nombre):
     return False
 
 # agregar producto
-def agregar_producto(productos_lista):
+def agregar_producto(productos_lista): #Creación CRUD - incluye validaciones
     print("\n--- Agregar producto ---")
     # pedir código
     codigo = input("Código: ").strip().upper()
     # validar código vacío
     if codigo == "":
-        print("Código vacío.")
+        print("Código vacío")
         return
     # validar duplicado
     if buscar_producto(productos_lista, codigo) is not None:
-        print("El código ya existe.")
+        print("El código ya existe")
         return
     # pedir nombre
-    nombre = input("Nombre: ").strip()
+    nombre = input("Nombre:").strip()
     # validar nombre
     if nombre == "":
-        print("Nombre vacío.")
+        print("Nombre vacío")
         return
     # validar duplicado nombre
     if nombre_duplicado(productos_lista, nombre):
-        print("El nombre ya existe.")
+        print("El nombre ya existe")
         return
     try:
         # pedir precio
-        precio = float(input("Precio: "))
+        precio = float(input("Precio:"))
         # validar precio
         if precio <= 0:
-            print("Precio inválido.")
+            print("Precio inválido")
             return
         # pedir stock
-        stock = int(input("Stock: "))
+        stock = int(input("Stock:"))
         # validar stock
         if stock < 0:
-            print("Stock inválido.")
+            print("Stock inválido")
             return
     except ValueError:
-        print("Datos inválidos.")
+        print("Datos inválidos")
         return
     # crear producto
     producto = {
@@ -91,17 +89,16 @@ def agregar_producto(productos_lista):
     productos_lista.append(producto)
     # guardar archivo
     guardar_productos(productos_lista)
-    print("Producto agregado correctamente.")
+    print("Producto agregado correctamente")
 
-# listar productos
-def listar_productos(productos_lista):
+def listar_productos(productos_lista): # Read (CRUD) -  Recorre la lista de diccionarios e imprime
     print("\n--- Lista de productos ---")
     # si no hay productos
     if len(productos_lista) == 0:
-        print("No hay productos registrados.")
+        print("No hay productos registrados")
         return
-    # mostrar cada producto
-    for p in productos_lista:
+
+    for p in productos_lista: # mostrar cada producto
         print("----------------")
         print("Código:", p['codigo'])
         print("Nombre:", p['nombre'])
@@ -109,19 +106,19 @@ def listar_productos(productos_lista):
         print("Stock:", p['stock'])
 
 # modificar producto
-def modificar_producto(productos_lista):
+def modificar_producto(productos_lista): # update CRUD -  buscar un elemento por su código único e ir modificando de forma selectiva
     print("\n--- Modificar producto ---")
     codigo = input("Código: ").strip().upper()
     # buscar producto
     i = buscar_producto(productos_lista, codigo)
     if i is None:
-        print("El producto no existe.")
+        print("El producto no existe")
         return
     # cambiar nombre
-    nombre = input("Nuevo nombre: ").strip()
+    nombre = input("Nuevo nombre:").strip()
     if nombre != "":
         if nombre_duplicado(productos_lista, nombre):
-            print("El nombre ya está en uso.")
+            print("El nombre ya está en uso")
             return
         productos_lista[i]['nombre'] = nombre
     try:
@@ -138,36 +135,36 @@ def modificar_producto(productos_lista):
             if stock >= 0:
                 productos_lista[i]['stock'] = stock
     except ValueError:
-        print("Dato inválido.")
+        print("Dato inválido")
     # guardar cambios
     guardar_productos(productos_lista)
-    print("Producto actualizado correctamente.")
+    print("Producto actualizado correctamente")
 
 # eliminar producto
-def eliminar_producto(productos_lista):
+def eliminar_producto(productos_lista): # Delate (CRUD) - .pop(i)  tras localizar el índice exacto mediante la función de búsqueda
     print("\n--- Eliminar producto ---")
     codigo = input("Código: ").strip().upper()
     # buscar producto
     i = buscar_producto(productos_lista, codigo)
     if i is None:
-        print("El producto no existe.")
+        print("El producto no existe")
         return
     # eliminar
     productos_lista.pop(i)
     guardar_productos(productos_lista)
-    print("Producto eliminado correctamente.")
+    print("Producto eliminado correctamente")
 
 # submenú de productos
 def menu_productos():
     while True:
         productos_lista = cargar_productos()
-        print("\n======= MENÚ PRODUCTOS =======")
+        print("\n ------ Menú productos -----")
         print("1. Agregar producto")
         print("2. Ver productos")
         print("3. Modificar producto")
         print("4. Eliminar producto")
         print("5. Volver al menú principal")
-        opcion = input("Seleccione una opción: ")
+        opcion = input("Seleccione una opción:")
         if opcion == "1":
             agregar_producto(productos_lista)
         elif opcion == "2":
@@ -179,4 +176,4 @@ def menu_productos():
         elif opcion == "5":
             break
         else:
-            print("Opción inválida.")
+            print("Opción inválida")
