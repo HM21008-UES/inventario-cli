@@ -63,8 +63,8 @@ def agregar_producto(productos_lista): #Creación CRUD - incluye validaciones
         print("El nombre ya existe")
         return
     try:
-        # pedir precio
-        precio = float(input("Precio:"))
+        # $ directo en el texto de input para que el usuario lo deba digitarlo
+        precio = float(input("Precio: $"))
         # validar precio
         if precio <= 0:
             print("Precio inválido")
@@ -102,7 +102,7 @@ def listar_productos(productos_lista): # Read (CRUD) -  Recorre la lista de dicc
         print("----------------")
         print("Código:", p['codigo'])
         print("Nombre:", p['nombre'])
-        print("Precio:", p['precio'])
+        print("Precio: $", p['precio'])
         print("Stock:", p['stock'])
 
 # modificar producto
@@ -122,14 +122,13 @@ def modificar_producto(productos_lista): # update CRUD -  buscar un elemento por
             return
         productos_lista[i]['nombre'] = nombre
     try:
-        # cambiar precio
-        precio = input("Nuevo precio: ").strip()
+        #  $ directo en el texto de input para que el usuario lo vea en pantalla
         if precio != "":
             precio = float(precio)
             if precio > 0:
                 productos_lista[i]['precio'] = precio
         # cambiar stock
-        stock = input("Nuevo stock: ").strip()
+        stock = input("Nuevo stock: ")
         if stock != "":
             stock = int(stock)
             if stock >= 0:
@@ -141,7 +140,7 @@ def modificar_producto(productos_lista): # update CRUD -  buscar un elemento por
     print("Producto actualizado correctamente")
 
 # eliminar producto
-def eliminar_producto(productos_lista): # Delate (CRUD) - .pop(i)  tras localizar el índice exacto mediante la función de búsqueda
+def eliminar_producto(productos_lista): # Delete (CRUD) - .pop(i)  tras localizar el índice exacto mediante la función de búsqueda
     print("\n--- Eliminar producto ---")
     codigo = input("Código: ").strip().upper()
     # buscar producto
