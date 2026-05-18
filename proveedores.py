@@ -2,7 +2,6 @@
 # MODULO PROVEEDORES Y MOVIMIENTOS
 # ==========================================
 
-import json
 
 # ==========================================
 # LISTAS PRINCIPALES
