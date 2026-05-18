@@ -11,13 +11,6 @@ import json
 proveedores = []
 movimientos = []
 
-# Productos simulados
-productos = [
-    {"nombre": "Coca Cola", "stock": 20},
-    {"nombre": "Pepsi", "stock": 15},
-    {"nombre": "Galletas", "stock": 30}
-]
-
 # ==========================================
 # GUARDAR JSON
 # ==========================================
@@ -161,17 +154,26 @@ def eliminar_proveedor():
 
 def registrar_movimiento():
 
+# Carga la lista real y actualizada de productos desde el JSON
+productos_reales = cargar_productos()
+
     print("\n===== MOVIMIENTOS INVENTARIO =====")
+ 
+if len(productos_reales) == 0:
 
-    for i in range(len(productos)):
+    print("No hay productos registrados en el sistema para realizar movimientos.")
+    return
 
-        print(f"{i+1}. {productos[i]['nombre']} | Stock: {productos[i]['stock']}")
+
+    for i in range(len(productos_reales)):
+
+         print(f"{i + 1}. {productos_reales[i]['nombre']} (Código: {productos_reales[i]['codigo']}) | Stock: {productos_reales[i]['stock']}")
 
     try:
 
-        producto = int(input("Seleccione producto: ")) - 1
+        producto_idx = int(input("Seleccione producto: ")) - 1
 
-        if producto >= 0 and producto < len(productos):
+        if 0 <= producto_idx < len(productos_reales):
 
             tipo = input("Tipo de movimiento (entrada/salida): ").lower()
 
@@ -185,7 +187,7 @@ def registrar_movimiento():
 
             if tipo == "entrada":
 
-                productos[producto]["stock"] += cantidad
+                productos_reales[producto_idx]["stock"] += cantidad
 
             # ==================================
             # SALIDA
@@ -193,12 +195,12 @@ def registrar_movimiento():
 
             elif tipo == "salida":
 
-                if cantidad > productos[producto]["stock"]:
+                if cantidad > productos_reales[producto_idx]["stock"]:
 
                     print("ERROR: Stock insuficiente")
                     return
 
-                productos[producto]["stock"] -= cantidad
+                productos_reales[producto_idx]["stock"] -= cantidad
 
             else:
 
@@ -210,16 +212,19 @@ def registrar_movimiento():
             # ==================================
 
             movimiento = {
-                "producto": productos[producto]["nombre"],
+                "producto": productos_reales[producto_idx]["nombre"],
                 "tipo": tipo,
                 "cantidad": cantidad,
                 "fecha": fecha,
-                "stock_actual": productos[producto]["stock"]
+                "stock_actual": productos_reales[producto_idx]["stock"]
             }
 
             movimientos.append(movimiento)
-
+            
+            # Guarda los datos de movimientos y actualiza el JSON de productos
             guardar_datos()
+
+            guardar_productos(productos_reales)
 
             print("Movimiento registrado correctamente")
             print(f"Stock actual: {productos[producto]['stock']}")
@@ -254,10 +259,10 @@ def historial_movimientos():
             print(f"Stock actual : {movimientos[i]['stock_actual']}")
 
 # ==========================================
-# MENU PRINCIPAL
+# SUBMENU DE PROVEEDORES Y MOVIMIENTOS
 # ==========================================
 
-def menu():
+def menu_proveedores():
 
     cargar_datos()
 
@@ -296,15 +301,9 @@ def menu():
             historial_movimientos()
 
         elif opcion == "7":
-
-            print("Saliendo del sistema...")
-            break
+        break
+          
 
         else:
             print("Opcion invalida")
 
-# ==========================================
-# INICIO
-# ==========================================
-
-menu()
