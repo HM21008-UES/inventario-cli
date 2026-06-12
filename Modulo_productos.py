@@ -93,35 +93,52 @@ def listar_productos(productos_lista): # READ
         print("Stock:", p['stock'])
 
 # modificar producto
-def modificar_producto(productos_lista): # UPDATE
+def modificar_producto(productos_lista):
     print("\n--- Modificar producto ---")
-    codigo = input("Código: ").strip().upper()
+    nombre_buscar = input("Nombre del producto: ").strip()
+    encontrados = False
+    print("\nCoincidencias encontradas:")
+
+    for producto in productos_lista:
+        if nombre_buscar.upper() in producto["nombre"].upper():
+            encontrados = True
+            print("----------------")
+            print("Código:", producto["codigo"])
+            print("Nombre:", producto["nombre"])
+            print("Precio: $", producto["precio"])
+    if not encontrados:
+        print("No se encontraron productos")
+        return
+
+    codigo = input("\nIngrese el código del producto: ").strip().upper()
+
     i = buscar_producto(productos_lista, codigo)
     if i is None:
         print("El producto no existe")
         return
 
-    nombre = input("Nuevo nombre:").strip()
-    if nombre != "":
-        if nombre_duplicado(productos_lista, nombre):
-            print("El nombre ya está en uso")
-            return
-        productos_lista[i]['nombre'] = nombre
+    nuevo_nombre = input("Nuevo nombre: ").strip()
+    if nuevo_nombre != "":
+        for producto in productos_lista:
+            if (
+                producto["codigo"] != codigo
+                and producto["nombre"].upper() == nuevo_nombre.upper()
+            ):
+                print("El nombre ya está en uso")
+                return
+        productos_lista[i]["nombre"] = nuevo_nombre
 
     try:
-        precio = input("Nuevo precio: $").strip()
-        if precio != "":
-            precio = float(precio)
-            if precio > 0:
-                productos_lista[i]['precio'] = precio
-
-        stock = input("Nuevo stock:").strip()
-        if stock != "":
-            stock = int(stock)
-            if stock >= 0:
-                productos_lista[i]['stock'] = stock
+        nuevo_precio = input("Nuevo precio: $").strip()
+        if nuevo_precio != "":
+            nuevo_precio = float(nuevo_precio)
+            if nuevo_precio <= 0:
+                print("Precio inválido")
+                return
+            productos_lista[i]["precio"] = nuevo_precio
     except ValueError:
         print("Dato inválido")
+        return
 
     guardar_productos(productos_lista)
     print("Producto actualizado correctamente")
@@ -165,12 +182,20 @@ def valor_inventario(productos_lista):
 
     for producto in productos_lista:
         valor_producto = producto["precio"] * producto["stock"]
-        print(str(contador) + ".", producto["nombre"], "$", valor_producto)
+        print(
+            str(contador) + ".",
+            producto["nombre"],
+            "| Precio unitario: $",
+            producto["precio"],
+            "| Stock:",
+            producto["stock"],
+            "| Total: $",
+            valor_producto
+        )
         total_inventario += valor_producto
         contador += 1
-
-    print("--------------------------------------")
-    print("Valor total del inventario: $", total_inventario) # acumulador
+    print("----------------------------------------------------------------------")
+    print("                            Valor total del inventario: $", total_inventario) # acumulador
 
 # productos bajo stock y agotados
 def productos_bajo_stock(productos_lista):
