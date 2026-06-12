@@ -1,3 +1,6 @@
+import json
+from Modulo_productos import cargar_productos, guardar_productos
+
 # ==========================================
 # MODULO PROVEEDORES Y MOVIMIENTOS
 # ==========================================
@@ -153,20 +156,18 @@ def eliminar_proveedor():
 
 def registrar_movimiento():
 
-# Carga la lista real y actualizada de productos desde el JSON
-productos_reales = cargar_productos()
+    # Carga la lista real y actualizada de productos desde el JSON
+    productos_reales = cargar_productos()
 
     print("\n===== MOVIMIENTOS INVENTARIO =====")
- 
-if len(productos_reales) == 0:
 
-    print("No hay productos registrados en el sistema para realizar movimientos.")
-    return
-
+    if len(productos_reales) == 0:
+        print("No hay productos registrados en el sistema para realizar movimientos.")
+        return
 
     for i in range(len(productos_reales)):
 
-         print(f"{i + 1}. {productos_reales[i]['nombre']} (Código: {productos_reales[i]['codigo']}) | Stock: {productos_reales[i]['stock']}")
+        print(f"{i + 1}. {productos_reales[i]['nombre']} (Código: {productos_reales[i]['codigo']}) | Stock: {productos_reales[i]['stock']}")
 
     try:
 
@@ -219,14 +220,12 @@ if len(productos_reales) == 0:
             }
 
             movimientos.append(movimiento)
-            
-            # Guarda los datos de movimientos y actualiza el JSON de productos
-            guardar_datos()
 
+            guardar_datos()
             guardar_productos(productos_reales)
 
             print("Movimiento registrado correctamente")
-            print(f"Stock actual: {productos[producto]['stock']}")
+            print(f"Stock actual: {productos_reales[producto_idx]['stock']}")
 
         else:
             print("ERROR: Producto invalido")
@@ -260,6 +259,7 @@ def historial_movimientos():
 # ==========================================
 # SUBMENU DE PROVEEDORES Y MOVIMIENTOS
 # ==========================================
+
 
 def menu_proveedores():
 
@@ -300,9 +300,8 @@ def menu_proveedores():
             historial_movimientos()
 
         elif opcion == "7":
-        break
-          
+            break
+
 
         else:
             print("Opcion invalida")
-
